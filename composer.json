@@ -1,6 +1,7 @@
 {
     "name": "kphoen/vex",
     "type": "library",
+    "keywords": ["video", "url", "parser", "extractor", "rutube", "dailymotion"],
     "license": "MIT",
     "authors": [
         {
@@ -9,9 +10,6 @@
             "homepage": "http://www.kevingomez.fr/"
         }
     ],
-    "require": {
-        "fabpot/goutte": "dev-master"
-    },
     "autoload": {
         "psr-0": { "Vex": "src/" }
     }
