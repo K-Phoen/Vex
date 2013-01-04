@@ -3,7 +3,7 @@
 namespace Vex\Result;
 
 
-class Video implements VideoResultInterface
+class Video
 {
     protected $duration = null;
     protected $thumb = null;
@@ -47,7 +47,7 @@ class Video implements VideoResultInterface
         }
 
         if (isset($data['duration'])) {
-            $this->duration = $data['duration'];
+            $this->duration = (int) $data['duration'];
         }
 
         if (isset($data['embed_code'])) {

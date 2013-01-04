@@ -78,5 +78,5 @@ echo $video->getThumb();
 Todo list
 =========
 
-  * write more tests
   * the size in the video HTML should be configurable
+  * support more platforms
