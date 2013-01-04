@@ -10,6 +10,17 @@
             "homepage": "http://www.kevingomez.fr/"
         }
     ],
+    "require-dev": {
+        "kriswallsmith/buzz": "*",
+        "guzzle/guzzle": "*",
+        "zendframework/zend-http": "*"
+    },
+    "suggest": {
+        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter, it's the recommended HTTP layer.",
+        "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter.",
+        "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
+        "zendframework/zend-http": "Enabling Zend_Http allows you to use the ZendHttpAdapter"
+    },
     "autoload": {
         "psr-0": { "Vex": "src/" }
     }

@@ -28,7 +28,7 @@ class TagTelePlatform extends AbstractPlatform
         $id = array_pop($data);
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $id, $id);
 
-        $content = $this->getUrlContent($url);
+        $content = $this->getContent($url);
 
         // retrieve the thumbnail url
         if (preg_match(self::THUMB_REGEX, $content, $matches)) {

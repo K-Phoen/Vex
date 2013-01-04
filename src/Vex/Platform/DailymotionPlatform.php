@@ -32,7 +32,7 @@ class DailymotionPlatform extends AbstractPlatform
         }
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $data[0]);
 
-        $content = $this->getUrlContent($url);
+        $content = $this->getContent($url);
 
         // retrieve the thumbnail url
         if (preg_match(self::THUMB_REGEX, $content, $matches)) {

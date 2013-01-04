@@ -21,7 +21,7 @@ class RutubePlatform extends AbstractPlatform
     {
         $video_data = array('link' => $url);
 
-        $content = $this->getUrlContent($url);
+        $content = $this->getContent($url);
 
         // get the html embed code
         if (!preg_match(self::VIDEO_ID_REGEX, $content, $matches)) {

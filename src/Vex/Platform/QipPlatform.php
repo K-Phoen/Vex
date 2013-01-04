@@ -27,7 +27,7 @@ class QipPlatform extends AbstractPlatform
         }
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $data[1], $data[1]);
 
-        $content = $this->getUrlContent($url);
+        $content = $this->getContent($url);
 
         // retrieve the thumbnail url
         if (preg_match(self::THUMB_REGEX, $content, $matches)) {

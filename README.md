@@ -59,12 +59,11 @@ Usage
 ``` php
 use Vex\Vex;
 
-$url = 'https://rutube.ru/video/b5a392c180ddfe3e1ebded38f9f9dc52/';
+$http_adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
+$platform = \Vex\Platform\RutubePlatform($adapter);
+$vex = new Vex($platform);
 
-$vex = new Vex();
-$vex->addPlatform(new \Vex\Platform\RutubePlatform());
-
-$video = $vex->extract($url);
+$video = $vex->extract('https://rutube.ru/video/b5a392c180ddfe3e1ebded38f9f9dc52/');
 
 // Shows the embedded video HTML
 echo $video->getCode();
@@ -82,4 +81,3 @@ Todo list
   * write more tests
   * make the retrieval of the thumb, duration, ... optionnal
   * the size in the video HTML should be configurable
-  * use adapters to make HTTP calls

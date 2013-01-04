@@ -21,7 +21,7 @@ class VeevrPlatform extends AbstractPlatform
     {
         $video_data = array('link' => $url);
 
-        $content = $this->getUrlContent($url);
+        $content = $this->getContent($url);
         if (!preg_match(self::ID_REGEX, $content, $matches)) {
             throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
