@@ -71,7 +71,7 @@ class DailymotionPlatform extends AbstractPlatform
     protected function findDuration($page)
     {
         if (preg_match(self::DURATION_REGEX, $page, $matches)) {
-            return $matches[1];
+            return (int) $matches[1];
         }
 
         return null;
