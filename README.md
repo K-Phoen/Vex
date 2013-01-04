@@ -1,4 +1,4 @@
-Vex - Parse any video URL
+Vex - Parse any video URL [![Build Status](https://travis-ci.org/K-Phoen/Vex.png?branch=master)](https://travis-ci.org/K-Phoen/Vex)
 =========================
 
 **Vex** is a PHP library to extract a video from any URL.
