@@ -75,3 +75,11 @@ echo $video->getDuration();
 // Show the video thumbnail
 echo $video->getThumb();
 ```
+
+Todo list
+=========
+
+  * write more tests
+  * make the retrieval of the thumb, duration, ... optionnal
+  * the size in the video HTML should be configurable
+  * use adapters to make HTTP calls
