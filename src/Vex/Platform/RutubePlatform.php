@@ -2,6 +2,8 @@
 
 namespace Vex\Platform;
 
+use Vex\Exception\VideoNotFoundException;
+
 
 class RutubePlatform extends AbstractPlatform
 {
@@ -23,7 +25,7 @@ class RutubePlatform extends AbstractPlatform
 
         // get the html embed code
         if (!preg_match(self::VIDEO_ID_REGEX, $content, $matches)) {
-            throw new \RuntimeException('Impossible to retrieve the video\'s ID');
+            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $matches[1], $matches[1]);
 

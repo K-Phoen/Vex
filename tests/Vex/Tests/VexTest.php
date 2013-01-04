@@ -96,6 +96,19 @@ class VexTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($platform1, $this->vex->getPlatform());
     }
 
+    /**
+     * @dataProvider emptyDataProvider
+     */
+    public function testEmpty($url)
+    {
+        $platform = $this->getMockPlatform();
+        $platform->expects($this->never())->method('extract');
+
+        $this->vex->addPlatform($platform);
+
+        $this->assertNull($this->vex->extract($url));
+    }
+
 
     protected function getMockPlatform($name = 'test_platform')
     {
@@ -106,5 +119,14 @@ class VexTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($name));
 
         return $platform;
+    }
+
+    public function emptyDataProvider()
+    {
+        return array(
+            array(''),
+            array(null),
+            array(false),
+        );
     }
 }

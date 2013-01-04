@@ -2,6 +2,8 @@
 
 namespace Vex\Platform;
 
+use Vex\Exception\VideoNotFoundException;
+
 
 class DailymotionPlatform extends AbstractPlatform
 {
@@ -21,12 +23,12 @@ class DailymotionPlatform extends AbstractPlatform
 
         $data = explode('/', $url);
         if (!count($data) || empty($data[4])) {
-            throw new \RuntimeException('Impossible to retrieve the video\'s HTML code');
+            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
 
         $data = explode('_', $data[4]);
         if (!isset($data[0])) {
-            throw new \RuntimeException('Impossible to retrieve the video\'s HTML code');
+            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $data[0]);
 

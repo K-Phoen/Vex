@@ -2,6 +2,8 @@
 
 namespace Vex\Platform;
 
+use Vex\Exception\VideoNotFoundException;
+
 
 class QipPlatform extends AbstractPlatform
 {
@@ -21,7 +23,7 @@ class QipPlatform extends AbstractPlatform
 
         $data = explode('?id=', $url);
         if (count($data) !== 2) {
-            throw new \RuntimeException('Impossible to retrieve the video\'s ID');
+            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $data[1], $data[1]);
 

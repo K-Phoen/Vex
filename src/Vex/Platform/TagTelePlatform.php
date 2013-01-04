@@ -2,6 +2,8 @@
 
 namespace Vex\Platform;
 
+use Vex\Exception\VideoNotFoundException;
+
 
 class TagTelePlatform extends AbstractPlatform
 {
@@ -20,7 +22,7 @@ class TagTelePlatform extends AbstractPlatform
 
         $data = array_filter(explode('/', $url));
         if (empty($data[count($data) - 1])) {
-            throw new \RuntimeException('Impossible to retrieve the video\'s HTML code');
+            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
 
         $id = array_pop($data);

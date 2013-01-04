@@ -2,6 +2,8 @@
 
 namespace Vex\Platform;
 
+use Vex\Exception\VideoNotFoundException;
+
 
 class ChainedPlatform implements PlatformInterface
 {
@@ -51,12 +53,12 @@ class ChainedPlatform implements PlatformInterface
 
             try {
                 return $platform->extract($url);
-            } catch (\RuntimeException $e) {
+            } catch (VideoNotFoundException $e) {
                 // do nothing and try another platform
             }
         }
 
-        throw new \RuntimeException('No platform could retrieve the video at: ' . $url);
+        throw new VideoNotFoundException('No platform could retrieve the video at: ' . $url);
     }
 
     public function getName()
