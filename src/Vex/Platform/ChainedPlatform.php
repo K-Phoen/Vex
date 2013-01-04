@@ -44,7 +44,7 @@ class ChainedPlatform implements PlatformInterface
         return false;
     }
 
-    public function extract($url)
+    public function extract($url, array $options = array())
     {
         foreach ($this->platforms as $platform) {
             if (!$platform->support($url)) {
@@ -52,7 +52,7 @@ class ChainedPlatform implements PlatformInterface
             }
 
             try {
-                return $platform->extract($url);
+                return $platform->extract($url, $options);
             } catch (VideoNotFoundException $e) {
                 // do nothing and try another platform
             }

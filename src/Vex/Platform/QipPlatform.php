@@ -17,29 +17,59 @@ class QipPlatform extends AbstractPlatform
         return strpos($url, 'qip.ru') !== false;
     }
 
-    public function extract($url)
+    public function extract($url, array $options = array())
     {
         $video_data = array('link' => $url);
 
+        $video_id = $this->findId($url);
+        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $video_id);
+
+        $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
+        $find_duration = array_key_exists('with_duration', $options) && $options['with_duration'];
+
+        if ($find_duration || $find_thumb) {
+            $content = $this->getContent($url);
+        }
+
+        // retrieve the thumbnail url
+        if ($find_thumb) {
+            $video_data['thumb'] = $this->findThumb($content);
+        }
+
+        // retrieve the duration
+        if ($find_duration) {
+            $video_data['duration'] = $this->findDuration($content);
+        }
+
+        return $this->returnData($video_data);
+    }
+
+    protected function findId($url)
+    {
         $data = explode('?id=', $url);
         if (count($data) !== 2) {
             throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $data[1], $data[1]);
 
-        $content = $this->getContent($url);
+        return $data[1];
+    }
 
-        // retrieve the thumbnail url
+    protected function findThumb($page)
+    {
         if (preg_match(self::THUMB_REGEX, $content, $matches)) {
-            $video_data['thumb'] = $matches[1];
+            return $matches[1];
         }
 
-        // retrieve the duration
+        return null;
+    }
+
+    protected function findDuration($page)
+    {
         if (preg_match(self::DURATION_REGEX, $content, $matches)) {
-            $video_data['duration'] = $matches[1];
+            return $matches[1];
         }
 
-        return $video_data;
+        return null;
     }
 
     public function getName()

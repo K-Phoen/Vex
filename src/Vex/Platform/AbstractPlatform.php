@@ -49,4 +49,19 @@ abstract class AbstractPlatform implements PlatformInterface
     {
         return $this->getAdapter()->getContent($url);
     }
+
+    protected function returnData(array $data)
+    {
+        return array_merge($this->getDefaults(), $data);
+    }
+
+    protected function getDefaults()
+    {
+        return array(
+            'link'          => null,
+            'embed_code'    => null,
+            'duration'      => null,
+            'thumb'         => null,
+        );
+    }
 }

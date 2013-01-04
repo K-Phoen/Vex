@@ -17,10 +17,35 @@ class DailymotionPlatform extends AbstractPlatform
         return strpos($url, 'dailymotion.com') !== false;
     }
 
-    public function extract($url)
+    public function extract($url, array $options = array())
     {
-        $video_data = array('link' => $url);
+        $video_data = array(
+            'link'       => $url,
+            'embed_code' => sprintf(self::HTML_TMPL, $this->findId($url)),
+        );
 
+        $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
+        $find_duration = array_key_exists('with_duration', $options) && $options['with_duration'];
+
+        if ($find_duration || $find_thumb) {
+            $content = $this->getContent($url);
+        }
+
+        // retrieve the thumbnail url
+        if ($find_thumb) {
+            $video_data['thumb'] = $this->findThumb($content);
+        }
+
+        // retrieve the duration
+        if ($find_duration) {
+            $video_data['duration'] = $this->findDuration($content);
+        }
+
+        return $this->returnData($video_data);
+    }
+
+    protected function findId($url)
+    {
         $data = explode('/', $url);
         if (!count($data) || empty($data[4])) {
             throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
@@ -30,21 +55,26 @@ class DailymotionPlatform extends AbstractPlatform
         if (!isset($data[0])) {
             throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $data[0]);
 
-        $content = $this->getContent($url);
+        return $data[0];
+    }
 
-        // retrieve the thumbnail url
+    protected function findThumb($page)
+    {
         if (preg_match(self::THUMB_REGEX, $content, $matches)) {
-            $video_data['thumb'] = $matches[1];
+            return $matches[1];
         }
 
-        // retrieve the duration
+        return null;
+    }
+
+    protected function findDuration($page)
+    {
         if (preg_match(self::DURATION_REGEX, $content, $matches)) {
-            $video_data['duration'] = $matches[1];
+            return $matches[1];
         }
 
-        return $video_data;
+        return null;
     }
 
     public function getName()

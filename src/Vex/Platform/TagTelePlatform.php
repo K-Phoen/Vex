@@ -16,26 +16,39 @@ class TagTelePlatform extends AbstractPlatform
         return strpos($url, 'tagtele.com') !== false;
     }
 
-    public function extract($url)
+    public function extract($url, array $options = array())
     {
         $video_data = array('link' => $url);
 
+        $video_id = $this->findId($url);
+        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $video_id);
+
+        // retrieve the thumbnail url
+        if (array_key_exists('with_thumb', $options) && $options['with_thumb']) {
+            $content = $this->getContent($url);
+            $video_data['thumb'] = $this->findThumb($content);
+        }
+
+        return $this->returnData($video_data);
+    }
+
+    protected function findId($url)
+    {
         $data = array_filter(explode('/', $url));
         if (empty($data[count($data) - 1])) {
             throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
         }
 
-        $id = array_pop($data);
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $id, $id);
+        return array_pop($data);
+    }
 
-        $content = $this->getContent($url);
-
-        // retrieve the thumbnail url
+    protected function findThumb($page)
+    {
         if (preg_match(self::THUMB_REGEX, $content, $matches)) {
-            $video_data['thumb'] = $matches[1];
+            return $matches[1];
         }
 
-        return $video_data;
+        return null;
     }
 
     public function getName()

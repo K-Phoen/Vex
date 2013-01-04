@@ -17,13 +17,13 @@ class Vex
         $this->platform = $platform;
     }
 
-    public function extract($url)
+    public function extract($url, array $options = array())
     {
         if (empty($url)) {
             return null;
         }
 
-        $video_data = $this->getPlatform()->extract($url);
+        $video_data = $this->getPlatform()->extract($url, $options);
         return new Video($video_data);
     }
 
