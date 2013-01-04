@@ -44,7 +44,7 @@ class TagTelePlatform extends AbstractPlatform
 
     protected function findThumb($page)
     {
-        if (preg_match(self::THUMB_REGEX, $content, $matches)) {
+        if (preg_match(self::THUMB_REGEX, $page, $matches)) {
             return $matches[1];
         }
 

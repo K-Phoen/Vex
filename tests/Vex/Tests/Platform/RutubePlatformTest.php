@@ -69,12 +69,15 @@ class RutubePlatformTest extends TestCase
 
     public function pageProvider()
     {
+        $url = 'http://rutube.ru/foo';
+        $player = '<iframe width="640" height="360" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
+
         return array(
             // page url, page html, player, duration, thumb, options
-            array('http://rutube.ru/foo', '<html><head><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', '<iframe width="640" height="360" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>', null, null, array()),
-            array('http://rutube.ru/foo', '<html><head><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', '<iframe width="640" height="360" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>', null, null, array('with_thumb' => true, 'with_duration' => true)),
-            array('http://rutube.ru/foo', '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', '<iframe width="640" height="360" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>', null, 'http://cdn.rutube.ru/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array('http://rutube.ru/foo', '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', '<iframe width="640" height="360" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>', null, null, array('with_thumb' => false, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', $player, null, null, array()),
+            array($url, '<html><head><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', $player, null, null, array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', $player, null, 'http://cdn.rutube.ru/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://video.rutube.ru/4242" /></head></html>', $player, null, null, array('with_thumb' => false, 'with_duration' => true)),
         );
     }
 

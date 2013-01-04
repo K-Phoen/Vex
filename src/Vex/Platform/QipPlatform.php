@@ -14,7 +14,7 @@ class QipPlatform extends AbstractPlatform
 
     public function support($url)
     {
-        return strpos($url, 'qip.ru') !== false;
+        return strpos($url, 'qip.ru') !== false || strpos($url, 'smotri.com') || strpos($url, 'smotri.ru');
     }
 
     public function extract($url, array $options = array())
@@ -56,7 +56,7 @@ class QipPlatform extends AbstractPlatform
 
     protected function findThumb($page)
     {
-        if (preg_match(self::THUMB_REGEX, $content, $matches)) {
+        if (preg_match(self::THUMB_REGEX, $page, $matches)) {
             return $matches[1];
         }
 
@@ -65,8 +65,8 @@ class QipPlatform extends AbstractPlatform
 
     protected function findDuration($page)
     {
-        if (preg_match(self::DURATION_REGEX, $content, $matches)) {
-            return $matches[1];
+        if (preg_match(self::DURATION_REGEX, $page, $matches)) {
+            return (int) $matches[1];
         }
 
         return null;

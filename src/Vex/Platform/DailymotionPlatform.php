@@ -61,7 +61,7 @@ class DailymotionPlatform extends AbstractPlatform
 
     protected function findThumb($page)
     {
-        if (preg_match(self::THUMB_REGEX, $content, $matches)) {
+        if (preg_match(self::THUMB_REGEX, $page, $matches)) {
             return $matches[1];
         }
 
@@ -70,7 +70,7 @@ class DailymotionPlatform extends AbstractPlatform
 
     protected function findDuration($page)
     {
-        if (preg_match(self::DURATION_REGEX, $content, $matches)) {
+        if (preg_match(self::DURATION_REGEX, $page, $matches)) {
             return $matches[1];
         }
 

@@ -25,11 +25,15 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @return HttpAdapterInterface
      */
-    protected function getMockAdapterReturns($returnValue)
+    protected function getMockAdapterReturns($returnValue, $expects = null)
     {
+        if (null === $expects) {
+            $expects = $this->once();
+        }
+
         $mock = $this->getMock('\Vex\HttpAdapter\HttpAdapterInterface');
         $mock
-            ->expects($this->once())
+            ->expects($expects)
             ->method('getContent')
             ->will($this->returnValue($returnValue));
 
