@@ -17,6 +17,12 @@ class CurlHttpAdapterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetName()
+    {
+        $buzz = new CurlHttpAdapter();
+        $this->assertEquals('curl', $buzz->getName());
+    }
+
     public function testGetNullContent()
     {
         $curl = new CurlHttpAdapter();

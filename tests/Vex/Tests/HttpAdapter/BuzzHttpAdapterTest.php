@@ -17,6 +17,12 @@ class BuzzHttpAdapterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetName()
+    {
+        $buzz = new BuzzHttpAdapter();
+        $this->assertEquals('buzz', $buzz->getName());
+    }
+
     public function testGetNullContent()
     {
         $buzz = new BuzzHttpAdapter();

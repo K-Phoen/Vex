@@ -15,6 +15,12 @@ class SocketHttpAdapterTest extends \PHPUnit_Framework_TestCase
         $this->adapter = new SocketHttpAdapter();
     }
 
+    public function testGetName()
+    {
+        $buzz = new SocketHttpAdapter();
+        $this->assertEquals('socket', $buzz->getName());
+    }
+
     public function testGetContent()
     {
         try {

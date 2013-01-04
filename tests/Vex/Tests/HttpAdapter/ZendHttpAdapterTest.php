@@ -18,6 +18,12 @@ class ZendHttpAdapterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetName()
+    {
+        $buzz = new ZendHttpAdapter();
+        $this->assertEquals('zend', $buzz->getName());
+    }
+
     public function testGetNullContent()
     {
         $zend = new ZendHttpAdapter();

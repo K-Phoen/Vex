@@ -22,19 +22,12 @@ class GuzzleHttpAdapterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @covers Vex\HttpAdapter\GuzzleHttpAdapter::__construct
-     */
     public function testCreatesDefaultClient()
     {
         $adapter = new GuzzleHttpAdapter();
         $this->assertEquals('guzzle', $adapter->getName());
     }
 
-    /**
-     * @covers Vex\HttpAdapter\GuzzleHttpAdapter::__construct
-     * @covers Vex\HttpAdapter\GuzzleHttpAdapter::getContent
-     */
     public function testRetrievesResponse()
     {
         $historyPlugin = new HistoryPlugin();
