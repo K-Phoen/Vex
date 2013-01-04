@@ -20,17 +20,42 @@ class ChainedPlatform implements PlatformInterface
      */
     public function __construct(array $platforms = array())
     {
-        $this->platforms = $platforms;
+        $this->addPlatforms($platforms);
     }
 
     /**
-     * Add a platform
+     * Add a platform.
      *
      * @param PlatformInterface $platform
      */
     public function addPlatform(PlatformInterface $platform)
     {
         $this->platforms[] = $platform;
+        return $this;
+    }
+
+    /**
+     * Add several platforms.
+     *
+     * @param PlatformInterface $platform
+     */
+    public function addPlatforms(array $platforms)
+    {
+        foreach ($platforms as $platform) {
+            $this->addPlatform($platform);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns registered platforms indexed by name.
+     *
+     * @return PlatformInterface[]
+     */
+    public function getPlatforms()
+    {
+        return $this->platforms;
     }
 
     public function support($url)
