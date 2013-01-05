@@ -8,26 +8,17 @@ use Vex\Platform\DailymotionPlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class DailymotionPlatformTest extends TestCase
+class DailymotionPlatformTest extends PlatformTestCase
 {
+    protected function getPlatform($adapter)
+    {
+        return new DailymotionPlatform($adapter);
+    }
+
     public function testGetName()
     {
         $platform = new DailymotionPlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('dailymotion', $platform->getName());
-    }
-
-    /**
-     * @dataProvider supportUrlProvider
-     */
-    public function testSupport($url, $is_supported)
-    {
-        $platform = new DailymotionPlatform($this->getMockAdapter($this->never()));
-
-        if ($is_supported) {
-            $this->assertTrue($platform->support($url));
-        } else {
-            $this->assertFalse($platform->support($url));
-        }
     }
 
     /**
@@ -48,16 +39,6 @@ class DailymotionPlatformTest extends TestCase
         );
 
         $this->assertSame($expected_data, $platform->extract($url, $options));
-    }
-
-    /**
-     * @dataProvider failingExtractProvider
-     * @expectedException \Vex\Exception\VideoNotFoundException
-     */
-    public function testFailingExtract($url)
-    {
-        $platform = new DailymotionPlatform($this->getMockAdapter($this->never()));
-        $platform->extract($url);
     }
 
 

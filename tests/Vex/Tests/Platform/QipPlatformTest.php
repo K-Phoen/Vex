@@ -8,26 +8,17 @@ use Vex\Platform\QipPlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class QipPlatformTest extends TestCase
+class QipPlatformTest extends PlatformTestCase
 {
+    protected function getPlatform($adapter)
+    {
+        return new QipPlatform($adapter);
+    }
+
     public function testGetName()
     {
         $platform = new QipPlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('qip', $platform->getName());
-    }
-
-    /**
-     * @dataProvider supportUrlProvider
-     */
-    public function testSupport($url, $is_supported)
-    {
-        $platform = new QipPlatform($this->getMockAdapter($this->never()));
-
-        if ($is_supported) {
-            $this->assertTrue($platform->support($url));
-        } else {
-            $this->assertFalse($platform->support($url));
-        }
     }
 
     /**
@@ -48,16 +39,6 @@ class QipPlatformTest extends TestCase
         );
 
         $this->assertSame($expected_data, $platform->extract($url, $options));
-    }
-
-    /**
-     * @dataProvider failingExtractProvider
-     * @expectedException \Vex\Exception\VideoNotFoundException
-     */
-    public function testFailingExtract($url)
-    {
-        $platform = new QipPlatform($this->getMockAdapter($this->never()));
-        $platform->extract($url);
     }
 
 

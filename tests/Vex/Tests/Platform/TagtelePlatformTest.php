@@ -8,26 +8,17 @@ use Vex\Platform\TagTelePlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class TagTelePlatformTest extends TestCase
+class TagTelePlatformTest extends PlatformTestCase
 {
+    protected function getPlatform($adapter)
+    {
+        return new TagTelePlatform($adapter);
+    }
+
     public function testGetName()
     {
         $platform = new TagTelePlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('tagtele', $platform->getName());
-    }
-
-    /**
-     * @dataProvider supportUrlProvider
-     */
-    public function testSupport($url, $is_supported)
-    {
-        $platform = new TagTelePlatform($this->getMockAdapter($this->never()));
-
-        if ($is_supported) {
-            $this->assertTrue($platform->support($url));
-        } else {
-            $this->assertFalse($platform->support($url));
-        }
     }
 
     /**
@@ -72,6 +63,14 @@ class TagTelePlatformTest extends TestCase
             array($url, '<html><head><meta property="og:image" content="http://cdn.tagtele.com/thumb.jpg" /></head></html>', $player, null, null, 'http://cdn.tagtele.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+        );
+    }
+
+    public function failingExtractProvider()
+    {
+        return array(
+            // page url
+            array('//'),
         );
     }
 }

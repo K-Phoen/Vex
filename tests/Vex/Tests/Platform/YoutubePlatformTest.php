@@ -8,26 +8,17 @@ use Vex\Platform\YoutubePlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class YoutubePlatformTest extends TestCase
+class YoutubePlatformTest extends PlatformTestCase
 {
+    protected function getPlatform($adapter)
+    {
+        return new YoutubePlatform($adapter);
+    }
+
     public function testGetName()
     {
         $platform = new YoutubePlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('youtube', $platform->getName());
-    }
-
-    /**
-     * @dataProvider supportUrlProvider
-     */
-    public function testSupport($url, $is_supported)
-    {
-        $platform = new YoutubePlatform($this->getMockAdapter($this->never()));
-
-        if ($is_supported) {
-            $this->assertTrue($platform->support($url));
-        } else {
-            $this->assertFalse($platform->support($url));
-        }
     }
 
     /**
@@ -47,16 +38,6 @@ class YoutubePlatformTest extends TestCase
         );
 
         $this->assertSame($expected_data, $platform->extract($url, $options));
-    }
-
-    /**
-     * @dataProvider failingExtractProvider
-     * @expectedException \Vex\Exception\VideoNotFoundException
-     */
-    public function testFailingExtract($url)
-    {
-        $platform = new YoutubePlatform($this->getMockAdapter($this->never()));
-        $platform->extract($url);
     }
 
 
