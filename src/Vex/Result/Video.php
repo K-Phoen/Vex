@@ -5,6 +5,7 @@ namespace Vex\Result;
 
 class Video
 {
+    protected $title = null;
     protected $duration = null;
     protected $thumb = null;
     protected $link = null;
@@ -14,6 +15,11 @@ class Video
     public function __construct(array $data = array())
     {
         $this->fromArray($data);
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     public function getDuration()
@@ -40,6 +46,10 @@ class Video
     {
         if (isset($data['link'])) {
             $this->link = $data['link'];
+        }
+
+        if (isset($data['title'])) {
+            $this->title = $data['title'];
         }
 
         if (isset($data['thumb'])) {

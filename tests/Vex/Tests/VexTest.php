@@ -109,6 +109,26 @@ class VexTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->vex->extract($url));
     }
 
+    public function testExtract()
+    {
+        $platform = $this->getMockPlatform();
+        $platform
+            ->expects($this->once())
+            ->method('extract')
+            ->with($this->equalTo('some url'))
+            ->will($this->returnValue(array(
+                'title' => 'foo',
+                'link'  => 'some url'
+            )));
+        $this->vex->addPlatform($platform);
+        $video = $this->vex->extract('some url');
+
+        $this->assertInstanceof('\Vex\Result\Video', $video);
+        $this->assertEquals('foo', $video->getTitle());
+        $this->assertEquals('some url', $video->getLink());
+        $this->assertNull($video->getDuration());
+    }
+
 
     protected function getMockPlatform($name = 'test_platform')
     {

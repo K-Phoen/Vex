@@ -50,6 +50,15 @@ abstract class AbstractPlatform implements PlatformInterface
         return $this->getAdapter()->getContent($url);
     }
 
+    protected function searchRegex($regex, $content, $default = null)
+    {
+        if (preg_match($regex, $content, $matches)) {
+            return $matches[1];
+        }
+
+        return $default;
+    }
+
     protected function returnData(array $data)
     {
         return array_merge($this->getDefaults(), $data);
@@ -58,6 +67,7 @@ abstract class AbstractPlatform implements PlatformInterface
     protected function getDefaults()
     {
         return array(
+            'title'         => null,
             'link'          => null,
             'embed_code'    => null,
             'duration'      => null,

@@ -8,6 +8,7 @@ use Vex\Exception\VideoNotFoundException;
 class TagTelePlatform extends AbstractPlatform
 {
      const HTML_TMPL = '<object width="425" height="350"><param name="movie" value="http://www.tagtele.com/v/%s"></param><param name="wmode" value="transparent"></param><embed src="http://www.tagtele.com/v/%s" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed></object>';
+    const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
 
 
@@ -23,10 +24,21 @@ class TagTelePlatform extends AbstractPlatform
         $video_id = $this->findId($url);
         $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $video_id);
 
-        // retrieve the thumbnail url
-        if (array_key_exists('with_thumb', $options) && $options['with_thumb']) {
+        $find_title = array_key_exists('with_title', $options) && $options['with_title'];
+        $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
+
+        if ($find_thumb || $find_title) {
             $content = $this->getContent($url);
-            $video_data['thumb'] = $this->findThumb($content);
+        }
+
+        // retrieve the video's title
+        if ($find_title) {
+            $video_data['title'] = $this->searchRegex(self::TITLE_REGEX, $content);
+        }
+
+        // retrieve the thumbnail url
+        if ($find_thumb) {
+            $video_data['thumb'] = $this->searchRegex(self::THUMB_REGEX, $content);
         }
 
         return $this->returnData($video_data);
@@ -40,15 +52,6 @@ class TagTelePlatform extends AbstractPlatform
         }
 
         return array_pop($data);
-    }
-
-    protected function findThumb($page)
-    {
-        if (preg_match(self::THUMB_REGEX, $page, $matches)) {
-            return $matches[1];
-        }
-
-        return null;
     }
 
     public function getName()

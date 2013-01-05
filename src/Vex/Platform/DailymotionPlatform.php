@@ -8,6 +8,7 @@ use Vex\Exception\VideoNotFoundException;
 class DailymotionPlatform extends AbstractPlatform
 {
     const HTML_TMPL = '<iframe frameborder="0" width="560" height="315" src="http://www.dailymotion.com/embed/video/%s"></iframe>';
+    const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
     const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
 
@@ -24,21 +25,28 @@ class DailymotionPlatform extends AbstractPlatform
             'embed_code' => sprintf(self::HTML_TMPL, $this->findId($url)),
         );
 
+        $find_title = array_key_exists('with_title', $options) && $options['with_title'];
         $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
         $find_duration = array_key_exists('with_duration', $options) && $options['with_duration'];
 
-        if ($find_duration || $find_thumb) {
+        if ($find_duration || $find_thumb || $find_title) {
             $content = $this->getContent($url);
+        }
+
+        // retrieve the video's title
+        if ($find_title) {
+            $video_data['title'] = $this->searchRegex(self::TITLE_REGEX, $content);
         }
 
         // retrieve the thumbnail url
         if ($find_thumb) {
-            $video_data['thumb'] = $this->findThumb($content);
+            $video_data['thumb'] = $this->searchRegex(self::THUMB_REGEX, $content);
         }
 
         // retrieve the duration
         if ($find_duration) {
-            $video_data['duration'] = $this->findDuration($content);
+            $duration = $this->searchRegex(self::DURATION_REGEX, $content);
+            $video_data['duration'] = $duration !== null ? (int) $duration : null;
         }
 
         return $this->returnData($video_data);
@@ -52,29 +60,7 @@ class DailymotionPlatform extends AbstractPlatform
         }
 
         $data = explode('_', $data[4]);
-        if (!isset($data[0])) {
-            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
-        }
-
         return $data[0];
-    }
-
-    protected function findThumb($page)
-    {
-        if (preg_match(self::THUMB_REGEX, $page, $matches)) {
-            return $matches[1];
-        }
-
-        return null;
-    }
-
-    protected function findDuration($page)
-    {
-        if (preg_match(self::DURATION_REGEX, $page, $matches)) {
-            return (int) $matches[1];
-        }
-
-        return null;
     }
 
     public function getName()

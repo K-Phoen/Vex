@@ -65,6 +65,8 @@ $vex = new Vex($platform);
 
 $video = $vex->extract('https://rutube.ru/video/b5a392c180ddfe3e1ebded38f9f9dc52/');
 
+// Show the video title
+echo $video->getTitle();
 // Shows the embedded video HTML
 echo $video->getCode();
 // Show the video link
