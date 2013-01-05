@@ -9,6 +9,7 @@ Supported Services
 For each video-sharing website of the following list, a _Platform_ class can identify
 a supported URL and extract the video data.
 
+* [Youtube](http://www.youtube.com/)
 * [Dailymotion](http://www.dailymotion.com/)
 * [Rutube](http://rutube.ru/)
 * [Qip](http://qip.ru/)
