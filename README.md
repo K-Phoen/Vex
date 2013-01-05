@@ -11,6 +11,7 @@ a supported URL and extract the video data.
 
 * [Youtube](http://www.youtube.com/)
 * [Dailymotion](http://www.dailymotion.com/)
+* [Vimeo](http://vimeo.com/)
 * [Rutube](http://rutube.ru/)
 * [Qip](http://qip.ru/)
 * [Veevr](http://veevr.com/)
