@@ -8,17 +8,26 @@ use Vex\Platform\RutubePlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class RutubePlatformTest extends PlatformTestCase
+class RutubePlatformTest extends TestCase
 {
-    protected function getPlatform($adapter)
-    {
-        return new RutubePlatform($adapter);
-    }
-
     public function testGetName()
     {
         $platform = new RutubePlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('rutube', $platform->getName());
+    }
+
+    /**
+     * @dataProvider supportUrlProvider
+     */
+    public function testSupport($url, $is_supported)
+    {
+        $platform = new RutubePlatform($this->getMockAdapter($this->never()));
+
+        if ($is_supported) {
+            $this->assertTrue($platform->support($url));
+        } else {
+            $this->assertFalse($platform->support($url));
+        }
     }
 
     /**

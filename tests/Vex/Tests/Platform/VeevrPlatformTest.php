@@ -8,17 +8,26 @@ use Vex\Platform\VeevrPlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class VeevrPlatformTest extends PlatformTestCase
+class VeevrPlatformTest extends TestCase
 {
-    protected function getPlatform($adapter)
-    {
-        return new VeevrPlatform($adapter);
-    }
-
     public function testGetName()
     {
         $platform = new VeevrPlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('veevr', $platform->getName());
+    }
+
+    /**
+     * @dataProvider supportUrlProvider
+     */
+    public function testSupport($url, $is_supported)
+    {
+        $platform = new VeevrPlatform($this->getMockAdapter($this->never()));
+
+        if ($is_supported) {
+            $this->assertTrue($platform->support($url));
+        } else {
+            $this->assertFalse($platform->support($url));
+        }
     }
 
     /**
