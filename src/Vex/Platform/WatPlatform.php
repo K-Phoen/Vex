@@ -7,7 +7,7 @@ use Vex\Exception\VideoNotFoundException;
 
 class WatPlatform extends AbstractPlatform
 {
-    const HTML_TMPL = '<iframe src="http://www.wat.tv/embedframe/%s" frameborder="0" style="width: 560px; height: 315px;"></iframe>';
+    const HTML_TMPL = '<iframe src="http://www.wat.tv/embedframe/%s" frameborder="0" style="width: %dpx; height: %dpx;"></iframe>';
     const ID_REGEX = '`<meta property="og:video" content="http://www.wat.tv/swf2/(\w+)" />`';
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
@@ -21,13 +21,14 @@ class WatPlatform extends AbstractPlatform
 
     public function extract($url, array $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
         $video_data = array('link' => $url);
 
         $content = $this->getContent($url);
         $video_id = $this->findId($content);
 
         // get the html embed code
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $video_id);
+        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $options['width'], $options['height']);
 
         // retrieve the video's title
         if (array_key_exists('with_title', $options) && $options['with_title']) {
@@ -55,6 +56,14 @@ class WatPlatform extends AbstractPlatform
         }
 
         return $matches[1];
+    }
+
+    public function getDefaultOptions()
+    {
+        return array(
+            'width'  => 560,
+            'height' => 315
+        );
     }
 
     public function getName()

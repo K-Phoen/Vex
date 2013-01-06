@@ -54,6 +54,7 @@ class TagTelePlatformTest extends PlatformTestCase
     {
         $url = 'http://www.tagtele.com/videos/voir/94555';
         $player = '<object width="425" height="350"><param name="movie" value="http://www.tagtele.com/v/94555"></param><param name="wmode" value="transparent"></param><embed src="http://www.tagtele.com/v/94555" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed></object>';
+        $other_player = '<object width="520" height="280"><param name="movie" value="http://www.tagtele.com/v/94555"></param><param name="wmode" value="transparent"></param><embed src="http://www.tagtele.com/v/94555" type="application/x-shockwave-flash" wmode="transparent" width="520" height="280"></embed></object>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
@@ -62,7 +63,7 @@ class TagTelePlatformTest extends PlatformTestCase
             array($url, '<html><head><meta property="og:image" content="http://cdn.tagtele.com/thumb.jpg" /></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
             array($url, '<html><head><meta property="og:image" content="http://cdn.tagtele.com/thumb.jpg" /></head></html>', $player, null, null, 'http://cdn.tagtele.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
-            array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+            array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
         );
     }
 

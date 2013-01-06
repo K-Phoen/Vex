@@ -79,9 +79,3 @@ echo $video->getDuration();
 // Show the video thumbnail
 echo $video->getThumb();
 ```
-
-Todo list
-=========
-
-  * the size in the video HTML should be configurable
-  * support more platforms

@@ -66,6 +66,7 @@ class DailymotionPlatformTest extends PlatformTestCase
             array($url, '<html><head><meta property="video:duration" content="120" /></head></html>', $player, null, 120, null, array('with_thumb' => true, 'with_duration' => true)),
             array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+            array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', '<iframe frameborder="0" width="640" height="320" src="http://www.dailymotion.com/embed/video/xw7s8w"></iframe>', 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => '640', 'height' => '320')),
         );
     }
 

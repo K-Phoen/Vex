@@ -7,7 +7,7 @@ use Vex\Exception\VideoNotFoundException;
 
 class DailymotionPlatform extends AbstractPlatform
 {
-    const HTML_TMPL = '<iframe frameborder="0" width="560" height="315" src="http://www.dailymotion.com/embed/video/%s"></iframe>';
+    const HTML_TMPL = '<iframe frameborder="0" width="%d" height="%d" src="http://www.dailymotion.com/embed/video/%s"></iframe>';
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
     const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
@@ -20,9 +20,10 @@ class DailymotionPlatform extends AbstractPlatform
 
     public function extract($url, array $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
         $video_data = array(
             'link'       => $url,
-            'embed_code' => sprintf(self::HTML_TMPL, $this->findId($url)),
+            'embed_code' => sprintf(self::HTML_TMPL, $options['width'], $options['height'], $this->findId($url)),
         );
 
         $find_title = array_key_exists('with_title', $options) && $options['with_title'];
@@ -61,6 +62,14 @@ class DailymotionPlatform extends AbstractPlatform
 
         $data = explode('_', $data[4]);
         return $data[0];
+    }
+
+    public function getDefaultOptions()
+    {
+        return array(
+            'width'  => 560,
+            'height' => 315
+        );
     }
 
     public function getName()

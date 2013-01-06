@@ -10,7 +10,7 @@ class RutubePlatform extends AbstractPlatform
     const VIDEO_ID_REGEX = '`<meta name="twitter:player" value="https://video.rutube.ru/(\d+)" />`';
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
-    const HTML_TMPL = '<iframe width="640" height="360" src="http://rutube.ru/embed/%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
+    const HTML_TMPL = '<iframe width="%d" height="%d" src="http://rutube.ru/embed/%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
 
 
     public function support($url)
@@ -20,13 +20,14 @@ class RutubePlatform extends AbstractPlatform
 
     public function extract($url, array $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
         $video_data = array('link' => $url);
 
         $content = $this->getContent($url);
         $video_id = $this->findId($content);
 
         // get the html embed code
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $video_id);
+        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $options['width'], $options['height'], $video_id, $video_id);
 
         // retrieve the video's title
         if (array_key_exists('with_title', $options) && $options['with_title']) {

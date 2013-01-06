@@ -72,6 +72,7 @@ class VeevrPlatformTest extends TestCase
     {
         $url = 'http://veevr.com/videos/x40V2HW1A';
         $player = '<iframe src="http://veevr.com/embed/x40V2HW1A" width="640" height="360" scrolling="no" frameborder="0"></iframe>';
+        $other_player = '<iframe src="http://veevr.com/embed/x40V2HW1A" width="520" height="280" scrolling="no" frameborder="0"></iframe>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
@@ -81,6 +82,7 @@ class VeevrPlatformTest extends TestCase
             array($url, '<html><head><meta property="og:image" content="http://cdn.veevr.com/thumb.jpg" /><meta property="og:url" content="http://veevr.com/videos/x40V2HW1A" /></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
             array($url, '<html><head><meta property="og:url" content="http://veevr.com/videos/x40V2HW1A" /><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo" /><meta property="og:url" content="http://veevr.com/videos/x40V2HW1A" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+            array($url, '<html><head><meta property="og:title" content="Foo" /><meta property="og:url" content="http://veevr.com/videos/x40V2HW1A" /></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
         );
     }
 

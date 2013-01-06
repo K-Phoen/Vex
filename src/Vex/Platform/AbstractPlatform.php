@@ -74,4 +74,12 @@ abstract class AbstractPlatform implements PlatformInterface
             'thumb'         => null,
         );
     }
+
+    public function getDefaultOptions()
+    {
+        return array(
+            'width'  => 640,
+            'height' => 360
+        );
+    }
 }

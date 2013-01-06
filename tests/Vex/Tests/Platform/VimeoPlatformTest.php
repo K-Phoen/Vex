@@ -54,6 +54,7 @@ class VimeoPlatformTest extends PlatformTestCase
     {
         $url = 'http://vimeo.com/42';
         $player = '<iframe src="http://player.vimeo.com/video/42" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+        $other_player = '<iframe src="http://player.vimeo.com/video/42" width="520" height="280" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
@@ -66,6 +67,7 @@ class VimeoPlatformTest extends PlatformTestCase
             array($url, '<html><head></head><meta itemprop="duration" content="PT00H03M58S"></html>', $player, null, 238, null, array('with_thumb' => true, 'with_duration' => true)),
             array($url, '<html><head><meta property="og:title" content="Foo"></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo"></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+            array($url, '<html><head><meta property="og:title" content="Foo"></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
         );
     }
 

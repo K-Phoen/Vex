@@ -7,7 +7,7 @@ use Vex\Exception\VideoNotFoundException;
 
 class VimeoPlatform extends AbstractPlatform
 {
-    const HTML_TMPL = '<iframe src="http://player.vimeo.com/video/%s" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+    const HTML_TMPL = '<iframe src="http://player.vimeo.com/video/%s" width="%d" height="%d" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)">`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)">`';
     const DURATION_REGEX = '`<meta itemprop="duration" content="([^"]+)">`';
@@ -20,9 +20,10 @@ class VimeoPlatform extends AbstractPlatform
 
     public function extract($url, array $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
         $video_data = array(
             'link'       => $url,
-            'embed_code' => sprintf(self::HTML_TMPL, $this->findId($url)),
+            'embed_code' => sprintf(self::HTML_TMPL, $this->findId($url), $options['width'], $options['height']),
         );
 
         $find_title = array_key_exists('with_title', $options) && $options['with_title'];
@@ -70,6 +71,14 @@ class VimeoPlatform extends AbstractPlatform
         return $interval->h * 60 * 60 +
                $interval->i * 60 +
                $interval->s;
+    }
+
+    public function getDefaultOptions()
+    {
+        return array(
+            'width'  => 500,
+            'height' => 281
+        );
     }
 
     public function getName()

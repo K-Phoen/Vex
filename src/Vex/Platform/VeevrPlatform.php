@@ -7,7 +7,7 @@ use Vex\Exception\VideoNotFoundException;
 
 class VeevrPlatform extends AbstractPlatform
 {
-    const HTML_TMPL = '<iframe src="http://veevr.com/embed/%s" width="640" height="360" scrolling="no" frameborder="0"></iframe>';
+    const HTML_TMPL = '<iframe src="http://veevr.com/embed/%s" width="%d" height="%d" scrolling="no" frameborder="0"></iframe>';
     const VIDEO_ID_REGEX = '<meta property="og:url" content="http://veevr.com/videos/(\w+)" />';
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
@@ -20,11 +20,11 @@ class VeevrPlatform extends AbstractPlatform
 
     public function extract($url, array $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
         $video_data = array('link' => $url);
 
         $content = $this->getContent($url);
-        $video_id = $this->findId($content);
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $video_id);
+        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $this->findId($content), $options['width'], $options['height']);
 
         // retrieve the video's title
         if (array_key_exists('with_title', $options) && $options['with_title']) {

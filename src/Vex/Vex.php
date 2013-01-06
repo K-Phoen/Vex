@@ -10,11 +10,13 @@ class Vex
 {
     protected $platforms = array();
     protected $platform = null;
+    protected $options = array();
 
 
-    public function __construct(PlatformInterface $platform = null)
+    public function __construct(PlatformInterface $platform = null, array $options = array())
     {
         $this->platform = $platform;
+        $this->options = $options;
     }
 
     public function extract($url, array $options = array())
@@ -23,8 +25,34 @@ class Vex
             return null;
         }
 
-        $video_data = $this->getPlatform()->extract($url, $options);
+        $video_data = $this->getPlatform()->extract($url, array_merge($this->options, $options));
         return new Video($video_data);
+    }
+
+    public function setOption($key, $value)
+    {
+        $this->options[$key] = $value;
+        return $this;
+    }
+
+    public function setOptions(array $options = array())
+    {
+        $this->options = array_merge($this->options, $options);
+        return $this;
+    }
+
+    public function getOption($key)
+    {
+        if (!array_key_exists($key, $this->options)) {
+            throw new \RuntimeException(sprintf('Option %s is not defined', $key));
+        }
+
+        return $this->options[$key];
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**

@@ -129,6 +129,35 @@ class VexTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($video->getDuration());
     }
 
+    public function testOptions()
+    {
+        $this->assertEmpty($this->vex->getOptions());
+
+        $this->vex->setOption('foo', 'bar');
+        $this->assertSame(array('foo' => 'bar'), $this->vex->getOptions());
+        $this->assertEquals('bar', $this->vex->getOption('foo'));
+
+        $this->vex->setOption('bar', 'baz');
+        $this->assertSame(array('foo' => 'bar', 'bar' => 'baz'), $this->vex->getOptions());
+
+        $this->vex->setOption('bar', 'biz');
+        $this->assertSame(array('foo' => 'bar', 'bar' => 'biz'), $this->vex->getOptions());
+
+        $this->vex->setOptions(array('joe' => 'la frite', 'biz' => 'baz', 'bar' => 'bie'));
+        $this->assertSame(array('foo' => 'bar', 'bar' => 'bie', 'joe' => 'la frite', 'biz' => 'baz'), $this->vex->getOptions());
+
+        $vex = new Vex(null, array('foo' => 'bar'));
+        $this->assertSame(array('foo' => 'bar'), $vex->getOptions());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testInexistentOption()
+    {
+        $this->vex->getOption('joe');
+    }
+
 
     protected function getMockPlatform($name = 'test_platform')
     {
