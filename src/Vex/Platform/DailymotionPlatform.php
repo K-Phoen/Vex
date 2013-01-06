@@ -7,10 +7,8 @@ use Vex\Exception\VideoNotFoundException;
 
 class DailymotionPlatform extends AbstractPlatform
 {
+    const API_URL = 'https://api.dailymotion.com/video/%s?fields=title,embed_html,duration,thumbnail_url';
     const HTML_TMPL = '<iframe frameborder="0" width="%d" height="%d" src="http://www.dailymotion.com/embed/video/%s"></iframe>';
-    const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
-    const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
-    const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
 
 
     public function support($url)
@@ -21,33 +19,30 @@ class DailymotionPlatform extends AbstractPlatform
     public function extract($url, array $options = array())
     {
         $options = array_merge($this->getDefaultOptions(), $options);
+        $video_id = $this->findId($url);
         $video_data = array(
             'link'       => $url,
-            'embed_code' => sprintf(self::HTML_TMPL, $options['width'], $options['height'], $this->findId($url)),
+            'embed_code' => sprintf(self::HTML_TMPL, $options['width'], $options['height'], $video_id),
         );
 
-        $find_title = array_key_exists('with_title', $options) && $options['with_title'];
-        $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
-        $find_duration = array_key_exists('with_duration', $options) && $options['with_duration'];
-
-        if ($find_duration || $find_thumb || $find_title) {
-            $content = $this->getContent($url);
+        $response = json_decode($this->getContent(sprintf(self::API_URL, $video_id)));
+        if (!$response) {
+            throw new VideoNotFoundException('Impossible to query the API');
         }
 
         // retrieve the video's title
-        if ($find_title) {
-            $video_data['title'] = $this->searchRegex(self::TITLE_REGEX, $content);
+        if (array_key_exists('with_title', $options) && $options['with_title']) {
+            $video_data['title'] = $response->title;
         }
 
         // retrieve the thumbnail url
-        if ($find_thumb) {
-            $video_data['thumb'] = $this->searchRegex(self::THUMB_REGEX, $content);
+        if (array_key_exists('with_thumb', $options) && $options['with_thumb']) {
+            $video_data['thumb'] = $response->thumbnail_url;
         }
 
         // retrieve the duration
-        if ($find_duration) {
-            $duration = $this->searchRegex(self::DURATION_REGEX, $content);
-            $video_data['duration'] = $duration !== null ? (int) $duration : null;
+        if ( array_key_exists('with_duration', $options) && $options['with_duration']) {
+            $video_data['duration'] = $response->duration;
         }
 
         return $this->returnData($video_data);

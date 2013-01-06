@@ -24,12 +24,9 @@ class DailymotionPlatformTest extends PlatformTestCase
     /**
      * @dataProvider pageProvider
      */
-    public function testExtract($url, $html_content, $expected_player, $expected_title, $expected_duration, $expected_thumb, $options)
+    public function testExtract($url, $api_result, $expected_player, $expected_title, $expected_duration, $expected_thumb, $options)
     {
-        $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
-        $find_duration = array_key_exists('with_duration', $options) && $options['with_duration'];
-
-        $platform = new DailymotionPlatform($this->getMockAdapterReturns($html_content, $find_thumb || $find_duration ? $this->once() : $this->never()));
+        $platform = new DailymotionPlatform($this->getMockAdapterReturns($api_result, $this->once()));
         $expected_data = array(
             'title'         => $expected_title,
             'link'          => $url,
@@ -53,20 +50,18 @@ class DailymotionPlatformTest extends PlatformTestCase
     public function pageProvider()
     {
         $url = 'http://www.dailymotion.com/video/xw7s8w_jormungand-episode-23-vostfr_shortfilms';
+        $api_result = '{"title":"Mario Kart (R\u00e9mi Gaillard)","embed_html":"<iframe frameborder=\"0\" width=\"480\" height=\"360\" src=\"http:\/\/www.dailymotion.com\/embed\/video\/x7lni3\"><\/iframe>","duration":136,"thumbnail_url":"http:\/\/s1.dmcdn.net\/uUyF.jpg"}';
         $player = '<iframe frameborder="0" width="560" height="315" src="http://www.dailymotion.com/embed/video/xw7s8w"></iframe>';
+        $other_player = '<iframe frameborder="0" width="520" height="280" src="http://www.dailymotion.com/embed/video/xw7s8w"></iframe>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
-            array($url, '<html><head></head></html>', $player, null, null, null, array()),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.dailymotion.com/thumb.jpg" /></head></html>', $player, null, null, 'http://cdn.dailymotion.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.dailymotion.com/thumb.jpg" /></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head><meta property="video:duration" content="120" /><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg" /></head></html>', $player, null, 120, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="video:duration" content="120" /><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg" /></head></html>', $player, null, null, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => false)),
-            array($url, '<html><head><meta property="video:duration" content="120" /><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg" /></head></html>', $player, null, 120, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head><meta property="video:duration" content="120" /></head></html>', $player, null, 120, null, array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
-            array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
-            array($url, '<html><head><meta property="og:title" content="Foo" /></head></html>', '<iframe frameborder="0" width="640" height="320" src="http://www.dailymotion.com/embed/video/xw7s8w"></iframe>', 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => '640', 'height' => '320')),
+            array($url, $api_result, $player, null, null, null, array()),
+            array($url, $api_result, $player, null, 136, 'http://s1.dmcdn.net/uUyF.jpg', array('with_thumb' => true, 'with_duration' => true)),
+            array($url, $api_result, $player, null, 136, null, array('with_thumb' => false, 'with_duration' => true)),
+            array($url, $api_result, $player, null, null, 'http://s1.dmcdn.net/uUyF.jpg', array('with_thumb' => true, 'with_duration' => false)),
+            array($url, $api_result, $player, 'Mario Kart (Rémi Gaillard)', 136, 'http://s1.dmcdn.net/uUyF.jpg', array('with_thumb' => true, 'with_duration' => true, 'with_title' => true)),
+            array($url, $api_result, $other_player, null, 136, null, array('with_duration' => true, 'width' => 520, 'height' => 280)),
         );
     }
 
