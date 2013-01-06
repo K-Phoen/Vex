@@ -79,3 +79,32 @@ echo $video->getDuration();
 // Show the video thumbnail
 echo $video->getThumb();
 ```
+
+Tests
+=====
+
+To run unit tests, you'll need cURL and a set of dependencies you can install
+using Composer:
+
+```bash
+php composer.phar install --dev
+```
+
+Once installed, just launch the following command:
+
+```bash
+phpunit
+```
+
+Credits
+=======
+
+  * Kévin Gomez
+  * [William Durand](https://github.com/willdurand/) - for the `HttpAdapter` part, which was borrowed from [Geocoder](https://github.com/willdurand/Geocoder)
+  * [Jérôme Tamarelle](https://github.com/GromNaN/) - to whom I borrowed this README
+
+License
+=======
+
+Vex is released under the MIT License. See the bundled LICENSE file for
+details.
