@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Vex by K-Phoen : Extract videos from any URL" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Vex by K-Phoen</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/K-Phoen/Vex">View on GitHub</a>
+
+          <h1 id="project_title">Vex by K-Phoen</h1>
+          <h2 id="project_tagline">Extract videos from any URL</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/K-Phoen/Vex/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/K-Phoen/Vex/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Vex - Parse any video URL</h1>
+
+<p><strong>Vex</strong> is a PHP library to extract a video from any URL.</p>
+
+<h2>Supported Services</h2>
+
+<p>For each video-sharing website of the following list, a <em>Platform</em> class can identify
+a supported URL and extract the video data.</p>
+
+<ul>
+<li><a href="http://www.youtube.com/">Youtube</a></li>
+<li><a href="http://www.dailymotion.com/">Dailymotion</a></li>
+<li><a href="http://vimeo.com/">Vimeo</a></li>
+<li><a href="http://wat.tv/">Wat</a></li>
+<li><a href="http://rutube.ru/">Rutube</a></li>
+<li><a href="http://qip.ru/">Qip</a></li>
+<li><a href="http://veevr.com/">Veevr</a></li>
+<li><a href="http://www.tagtele.com/">TagTele</a></li>
+<li>... more to come</li>
+</ul><h1>Installation</h1>
+
+<p>The recommended way to install Vex is through composer.</p>
+
+<p>Just create a <code>composer.json</code> file for your project:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"kphoen/vex"</span><span class="p">:</span> <span class="s2">"dev-master"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>And run these two commands to install it:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>wget http://getcomposer.org/composer.phar
+<span class="nv">$ </span>php composer.phar install
+</pre></div>
+
+<p>Now you can add the autoloader, and you will have access to the library:</p>
+
+<div class="highlight"><pre><span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+</pre></div>
+
+<p>If you don't use neither <strong>Composer</strong> nor a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
+
+<div class="highlight"><pre><span class="k">require_once</span> <span class="s1">'src/autoload.php'</span><span class="p">;</span>
+</pre></div>
+
+<p>You're done.</p>
+
+<h1>Usage</h1>
+
+<div class="highlight"><pre><span class="k">use</span> <span class="nx">Vex\Vex</span><span class="p">;</span>
+
+<span class="nv">$http_adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Vex\HttpAdapter\BuzzHttpAdapter</span><span class="p">();</span>
+<span class="nv">$platform</span> <span class="o">=</span> <span class="nx">\Vex\Platform\RutubePlatform</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">);</span>
+<span class="nv">$vex</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vex</span><span class="p">(</span><span class="nv">$platform</span><span class="p">);</span>
+
+<span class="nv">$video</span> <span class="o">=</span> <span class="nv">$vex</span><span class="o">-&gt;</span><span class="na">extract</span><span class="p">(</span><span class="s1">'https://rutube.ru/video/b5a392c180ddfe3e1ebded38f9f9dc52/'</span><span class="p">);</span>
+
+<span class="c1">// Show the video title</span>
+<span class="k">echo</span> <span class="nv">$video</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">();</span>
+<span class="c1">// Shows the embedded video HTML</span>
+<span class="k">echo</span> <span class="nv">$video</span><span class="o">-&gt;</span><span class="na">getCode</span><span class="p">();</span>
+<span class="c1">// Show the video link</span>
+<span class="k">echo</span> <span class="nv">$video</span><span class="o">-&gt;</span><span class="na">getLink</span><span class="p">();</span>
+<span class="c1">// Show the video duration</span>
+<span class="k">echo</span> <span class="nv">$video</span><span class="o">-&gt;</span><span class="na">getDuration</span><span class="p">();</span>
+<span class="c1">// Show the video thumbnail</span>
+<span class="k">echo</span> <span class="nv">$video</span><span class="o">-&gt;</span><span class="na">getThumb</span><span class="p">();</span>
+</pre></div>
+
+<h1>Tests</h1>
+
+<p>To run unit tests, you'll need cURL and a set of dependencies you can install
+using Composer:</p>
+
+<div class="highlight"><pre>php composer.phar install --dev
+</pre></div>
+
+<p>Once installed, just launch the following command:</p>
+
+<div class="highlight"><pre>phpunit
+</pre></div>
+
+<h1>Credits</h1>
+
+<ul>
+<li>Kévin Gomez</li>
+<li>
+<a href="https://github.com/willdurand/">William Durand</a> - for the <code>HttpAdapter</code> part, which was borrowed from <a href="https://github.com/willdurand/Geocoder">Geocoder</a>
+</li>
+<li>
+<a href="https://github.com/GromNaN/">Jérôme Tamarelle</a> - to whom I borrowed this README</li>
+</ul><h1>License</h1>
+
+<p>Vex is released under the MIT License. See the bundled LICENSE file for
+details.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Vex by K-Phoen maintained by <a href="https://github.com/K-Phoen">K-Phoen</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
