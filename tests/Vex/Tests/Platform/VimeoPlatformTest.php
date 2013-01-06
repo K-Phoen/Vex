@@ -24,12 +24,9 @@ class VimeoPlatformTest extends PlatformTestCase
     /**
      * @dataProvider pageProvider
      */
-    public function testExtract($url, $html_content, $expected_player, $expected_title, $expected_duration, $expected_thumb, $options)
+    public function testExtract($url, $api_result, $expected_player, $expected_title, $expected_duration, $expected_thumb, $options)
     {
-        $find_thumb = array_key_exists('with_thumb', $options) && $options['with_thumb'];
-        $find_duration = array_key_exists('with_duration', $options) && $options['with_duration'];
-
-        $platform = new VimeoPlatform($this->getMockAdapterReturns($html_content, $find_thumb || $find_duration ? $this->once() : $this->never()));
+        $platform = new VimeoPlatform($this->getMockAdapterReturns($api_result, $this->once()));
         $expected_data = array(
             'title'         => $expected_title,
             'link'          => $url,
@@ -52,22 +49,21 @@ class VimeoPlatformTest extends PlatformTestCase
 
     public function pageProvider()
     {
-        $url = 'http://vimeo.com/42';
-        $player = '<iframe src="http://player.vimeo.com/video/42" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-        $other_player = '<iframe src="http://player.vimeo.com/video/42" width="520" height="280" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+        $url = 'http://vimeo.com/56490557';
+        $api_result = <<<EOF
+[{"id":56490557,"title":"Seb Toots Montreal snowboarding run","description":"This is a video about Seb Toots doing a top to bottom run from the Mt.Royal (downtown montreal mountain)<br \/>Films made with Red Scarlet camera during 2 days of shooting !<br \/>Film and edit by : Sunset Films (Mathieu Cowan)<br \/>Twitter\/Instagram: @sebtoots @sunsetfilms","url":"http:\/\/vimeo.com\/56490557","upload_date":"2012-12-29 21:39:40","thumbnail_small":"http:\/\/b.vimeocdn.com\/ts\/391\/154\/391154832_100.jpg","thumbnail_medium":"http:\/\/b.vimeocdn.com\/ts\/391\/154\/391154832_200.jpg","thumbnail_large":"http:\/\/b.vimeocdn.com\/ts\/391\/154\/391154832_640.jpg","user_id":9644233,"user_name":"Seb Toots","user_url":"http:\/\/vimeo.com\/user9644233","user_portrait_small":"http:\/\/b.vimeocdn.com\/ps\/467\/705\/4677055_30.jpg","user_portrait_medium":"http:\/\/b.vimeocdn.com\/ps\/467\/705\/4677055_75.jpg","user_portrait_large":"http:\/\/b.vimeocdn.com\/ps\/467\/705\/4677055_100.jpg","user_portrait_huge":"http:\/\/b.vimeocdn.com\/ps\/467\/705\/4677055_300.jpg","stats_number_of_likes":0,"stats_number_of_plays":139593,"stats_number_of_comments":52,"duration":238,"width":1280,"height":720,"tags":"snowboarding, red scarlet, red camera, seb toots, montreal, city, sunsetfilms, mathieu cowan, mt royal, city mountain, red bull, oakley, ride, o'neill, oneill, giro, empire","embed_privacy":"anywhere"}]
+EOF;
+        $player = '<iframe src="http://player.vimeo.com/video/56490557" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+        $other_player = '<iframe src="http://player.vimeo.com/video/56490557" width="520" height="280" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
-            array($url, '<html><head></head></html>', $player, null, null, null, array()),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.vimeo.com/thumb.jpg"></head></html>', $player, null, null, 'http://cdn.vimeo.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.vimeo.com/thumb.jpg"></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg"></head><meta itemprop="duration" content="PT00H03M58S"></html>', $player, null, 238, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg"></head><meta itemprop="duration" content="PT00H03M58S"></html>', $player, null, null, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => false)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg"></head></html><meta itemprop="duration" content="PT00H03M58S">', $player, null, 238, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head></head><meta itemprop="duration" content="PT00H03M58S"></html>', $player, null, 238, null, array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:title" content="Foo"></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
-            array($url, '<html><head><meta property="og:title" content="Foo"></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
-            array($url, '<html><head><meta property="og:title" content="Foo"></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
+            array($url, $api_result, $player, null, null, null, array()),
+            array($url, $api_result, $player, null, 238, 'http://b.vimeocdn.com/ts/391/154/391154832_640.jpg', array('with_thumb' => true, 'with_duration' => true)),
+            array($url, $api_result, $player, null, 238, null, array('with_thumb' => false, 'with_duration' => true)),
+            array($url, $api_result, $player, null, null, 'http://b.vimeocdn.com/ts/391/154/391154832_640.jpg', array('with_thumb' => true, 'with_duration' => false)),
+            array($url, $api_result, $player, 'Seb Toots Montreal snowboarding run', 238, 'http://b.vimeocdn.com/ts/391/154/391154832_640.jpg', array('with_thumb' => true, 'with_duration' => true, 'with_title' => true)),
+            array($url, $api_result, $other_player, null, 238, null, array('with_duration' => true, 'width' => 520, 'height' => 280)),
         );
     }
 
