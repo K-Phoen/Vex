@@ -10,13 +10,17 @@ class Vex
 {
     protected $platforms = array();
     protected $platform = null;
-    protected $options = array();
+    protected $options = array(
+        'with_title'    => true,
+        'with_thumb'    => true,
+        'with_duration' => true,
+    );
 
 
     public function __construct(PlatformInterface $platform = null, array $options = array())
     {
         $this->platform = $platform;
-        $this->options = $options;
+        $this->setOptions($options);
     }
 
     public function extract($url, array $options = array())
