@@ -41,7 +41,6 @@ abstract class AbstractPlatform implements PlatformInterface
     public function setAdapter($adapter)
     {
         $this->adapter = $adapter;
-
         return $this;
     }
 

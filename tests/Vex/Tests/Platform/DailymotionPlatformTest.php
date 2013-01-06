@@ -8,7 +8,7 @@ use Vex\Platform\DailymotionPlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class DailymotionPlatformTest extends PlatformTestCase
+class DailymotionPlatformTest extends ApiPlatformTestCase
 {
     protected function getPlatform($adapter)
     {
@@ -17,25 +17,8 @@ class DailymotionPlatformTest extends PlatformTestCase
 
     public function testGetName()
     {
-        $platform = new DailymotionPlatform($this->getMockAdapter($this->never()));
+        $platform = $this->getPlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('dailymotion', $platform->getName());
-    }
-
-    /**
-     * @dataProvider pageProvider
-     */
-    public function testExtract($url, $api_result, $expected_player, $expected_title, $expected_duration, $expected_thumb, $options)
-    {
-        $platform = new DailymotionPlatform($this->getMockAdapterReturns($api_result, $this->once()));
-        $expected_data = array(
-            'title'         => $expected_title,
-            'link'          => $url,
-            'embed_code'    => $expected_player,
-            'duration'      => $expected_duration,
-            'thumb'         => $expected_thumb,
-        );
-
-        $this->assertSame($expected_data, $platform->extract($url, $options));
     }
 
 
@@ -68,8 +51,9 @@ class DailymotionPlatformTest extends PlatformTestCase
     public function failingExtractProvider()
     {
         return array(
-            // page url
-            array('http://www.dailymotion.com/video/'),
+            // page url, api result
+            array('http://www.dailymotion.com/video/', null),
+            array('http://www.dailymotion.com/video/foo', 'invalid json'),
         );
     }
 }

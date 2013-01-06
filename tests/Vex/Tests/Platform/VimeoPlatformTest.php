@@ -8,7 +8,7 @@ use Vex\Platform\VimeoPlatform;
 /**
  * @author Kévin Gomez <contact@kevingomez.fr>
  */
-class VimeoPlatformTest extends PlatformTestCase
+class VimeoPlatformTest extends ApiPlatformTestCase
 {
     protected function getPlatform($adapter)
     {
@@ -17,25 +17,8 @@ class VimeoPlatformTest extends PlatformTestCase
 
     public function testGetName()
     {
-        $platform = new VimeoPlatform($this->getMockAdapter($this->never()));
+        $platform = $this->getPlatform($this->getMockAdapter($this->never()));
         $this->assertEquals('vimeo', $platform->getName());
-    }
-
-    /**
-     * @dataProvider pageProvider
-     */
-    public function testExtract($url, $api_result, $expected_player, $expected_title, $expected_duration, $expected_thumb, $options)
-    {
-        $platform = new VimeoPlatform($this->getMockAdapterReturns($api_result, $this->once()));
-        $expected_data = array(
-            'title'         => $expected_title,
-            'link'          => $url,
-            'embed_code'    => $expected_player,
-            'duration'      => $expected_duration,
-            'thumb'         => $expected_thumb,
-        );
-
-        $this->assertSame($expected_data, $platform->extract($url, $options));
     }
 
 
@@ -70,10 +53,11 @@ EOF;
     public function failingExtractProvider()
     {
         return array(
-            // page url
-            array('http://vimeo.com'),
-            array('http://vimeo.com/foo'),
-            array('http://vimeo.com/video/42'),
+            // page url, api result
+            array('http://vimeo.com', null),
+            array('http://vimeo.com/foo', null),
+            array('http://vimeo.com/video/42', null),
+            array('http://vimeo.com/42', 'invalid json'),
         );
     }
 }
