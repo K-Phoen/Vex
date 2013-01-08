@@ -26,7 +26,7 @@ The recommended way to install Vex is through composer.
 
 Just create a `composer.json` file for your project:
 
-``` json
+```json
 {
     "require": {
         "kphoen/vex": "dev-master"
@@ -36,7 +36,7 @@ Just create a `composer.json` file for your project:
 
 And run these two commands to install it:
 
-``` bash
+```bash
 $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
 ```
@@ -44,13 +44,13 @@ $ php composer.phar install
 
 Now you can add the autoloader, and you will have access to the library:
 
-``` php
+```php
 require 'vendor/autoload.php';
 ```
 
 If you don't use neither **Composer** nor a _ClassLoader_ in your application, just require the provided autoloader:
 
-``` php
+```php
 require_once 'src/autoload.php';
 ```
 
@@ -59,7 +59,7 @@ You're done.
 Usage
 =====
 
-``` php
+```php
 use Vex\Vex;
 
 $http_adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
