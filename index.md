@@ -32,40 +32,42 @@ The recommended way to install Vex is through composer.
 
 Just create a `composer.json` file for your project:
 
-```json
+{% highlight json %}
 {
     "require": {
         "kphoen/vex": "dev-master"
     }
 }
-```
+{% endhighlight %}
 
 And run these two commands to install it:
 
-```bash
+{% highlight bash %}
 $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
-```
+{% endhighlight %}
 
 
 Now you can add the autoloader, and you will have access to the library:
 
-```php
+{% highlight php %}
+<?php
 require 'vendor/autoload.php';
-```
+{% endhighlight %}
 
 If you don't use neither **Composer** nor a _ClassLoader_ in your application, just require the provided autoloader:
 
-```php
+{% highlight php %}
+<?php
 require_once 'src/autoload.php';
-```
+{% endhighlight %}
 
 You're done.
 
 Usage
 =====
 
-```php
+{% highlight php %}
 use Vex\Vex;
 
 $http_adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
@@ -84,7 +86,7 @@ echo $video->getLink();
 echo $video->getDuration();
 // Show the video thumbnail
 echo $video->getThumb();
-```
+{% endhighlight %}
 
 Tests
 =====
@@ -92,15 +94,15 @@ Tests
 To run unit tests, you'll need cURL and a set of dependencies you can install
 using Composer:
 
-```bash
+{% highlight bash %}
 php composer.phar install --dev
-```
+{% endhighlight %}
 
 Once installed, just launch the following command:
 
-```bash
+{% highlight bash %}
 phpunit
-```
+{% endhighlight %}
 
 Credits
 =======
