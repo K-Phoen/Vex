@@ -68,6 +68,7 @@ Usage
 =====
 
 {% highlight php %}
+<?php
 use Vex\Vex;
 
 $http_adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
