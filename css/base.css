@@ -88,7 +88,7 @@ body a { color: #4086AA;}
 
 .content h1 {
   text-align: left;
-  background: url("images/bg_hr.png") repeat-x scroll center bottom transparent;
+  background: url("../images/bg_hr.png") repeat-x scroll center bottom transparent;
 }
 
 #menu {
