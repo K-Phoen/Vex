@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{{ page.title }}</title>
+
+  <meta name="author" content="Kévin Gomez" />
+
+  <link rel="stylesheet" href="/css/base.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
+</head>
+<body>
+    <div class="row">
+        <header class="header">
+            <div class="twelve columns">
+                <a class="title" href="/">{{ page.title }}</a>
+                <span class="subtitle">{{ page.description }}</span>
+            </div>
+
+        </header>
+
+        <div id="menu" class="twelve columns">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="http://www.kevingomez.fr/a-propos">A propos</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            {{ content }}
+        </div>
+
+        <div id="copyright" class="twelve columns">
+            <p>Le thème Jekyll est <a href="https://github.com/vjousse/wp-vjousse">disponible sur Github</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
+
