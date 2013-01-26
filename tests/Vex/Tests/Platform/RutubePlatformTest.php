@@ -71,18 +71,18 @@ class RutubePlatformTest extends TestCase
     public function pageProvider()
     {
         $url = 'http://rutube.ru/foo';
-        $player = '<iframe width="640" height="360" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
-        $other_player = '<iframe width="520" height="280" src="http://rutube.ru/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
+        $player = '<iframe width="640" height="360" src="http://rutube.ru/video/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
+        $other_player = '<iframe width="520" height="280" src="http://rutube.ru/video/embed/4242" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
-            array($url, '<html><head><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /></head></html>', $player, null, null, null, array()),
-            array($url, '<html><head><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /></head></html>', $player, null, null, 'http://cdn.rutube.ru/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
-            array($url, '<html><head><meta property="og:title" content="Foo" /><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
-            array($url, '<html><head><meta property="og:title" content="Foo" /><meta name="twitter:player" value="https://video.rutube.ru/embed/4242" /></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
+            array($url, '<html><head><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /></head></html>', $player, null, null, null, array()),
+            array($url, '<html><head><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /></head></html>', $player, null, null, 'http://cdn.rutube.ru/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta property="og:image" content="http://cdn.rutube.ru/thumb.jpg" /><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
+            array($url, '<html><head><meta property="og:title" content="Foo" /><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+            array($url, '<html><head><meta property="og:title" content="Foo" /><meta name="twitter:player" value="https://rutube.ru/video/embed/4242" /></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
         );
     }
 

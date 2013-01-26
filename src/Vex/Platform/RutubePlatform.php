@@ -10,7 +10,7 @@ class RutubePlatform extends AbstractPlatform
     const VIDEO_ID_REGEX = '`<meta name="twitter:player" value="https://rutube.ru/video/embed/(\d+)" />`';
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
-    const HTML_TMPL = '<iframe width="%d" height="%d" src="http://rutube.ru/embed/%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
+    const HTML_TMPL = '<iframe width="%d" height="%d" src="http://rutube.ru/video/embed/%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
 
 
     public function support($url)
