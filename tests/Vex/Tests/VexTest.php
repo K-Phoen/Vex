@@ -129,6 +129,19 @@ class VexTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($video->getDuration());
     }
 
+    public function testReverse()
+    {
+        $platform = $this->getMockPlatform();
+        $platform
+            ->expects($this->once())
+            ->method('reverse')
+            ->with($this->equalTo('some code'))
+            ->will($this->returnValue('some url'));
+        $this->vex->addPlatform($platform);
+
+        $this->assertSame('some url', $this->vex->reverse('some code'));
+    }
+
     public function testOptions()
     {
         $this->assertSame(array(

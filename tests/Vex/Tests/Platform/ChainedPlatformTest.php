@@ -138,6 +138,30 @@ class ChainedPlatformTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(42, $chained_platform->extract('some url'));
     }
 
+    public function testReverse()
+    {
+        $to_reverse = 'some html embed code';
+        $url = 'http://some.url';
+
+        $platform1 = $this->getMock('\Vex\Platform\PlatformInterface');
+        $platform2 = $this->getMock('\Vex\Platform\PlatformInterface');
+
+        $platform1
+            ->expects($this->once())
+            ->method('reverse')
+            ->with($this->equalTo($to_reverse))
+            ->will($this->returnValue(null));
+
+        $platform2
+            ->expects($this->once())
+            ->method('reverse')
+            ->with($this->equalTo($to_reverse))
+            ->will($this->returnValue($url));
+
+        $chained_platform = new ChainedPlatform(array($platform1, $platform2));
+        $this->assertEquals($url, $chained_platform->reverse($to_reverse));
+    }
+
     /**
      * @expectedException \Vex\Exception\VideoNotFoundException
      */

@@ -44,6 +44,11 @@ abstract class AbstractPlatform implements PlatformInterface
         return $this;
     }
 
+    public function reverse($embed_code)
+    {
+        return null;
+    }
+
     protected function getContent($url)
     {
         return $this->getAdapter()->getContent($url);

@@ -78,6 +78,11 @@ echo $video->getLink();
 echo $video->getDuration();
 // Show the video thumbnail
 echo $video->getThumb();
+
+
+$url = $vex->reverse('<iframe width="640" height="360" src="http://rutube.ru/video/embed/6236741" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>');
+// shows http://rutube.ru/video/9f4dc6bc2db6b6051ea07fb20234c6cc/
+echo $url
 ```
 
 Tests

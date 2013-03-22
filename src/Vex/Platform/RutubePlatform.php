@@ -13,6 +13,9 @@ class RutubePlatform extends AbstractPlatform
     const HTML_TMPL = '<iframe width="%d" height="%d" src="http://rutube.ru/video/embed/%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
     const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
 
+    const REVERSE_EMBED_URL     = '`src="([^"]+)"`';
+    const REVERSE_VIDEO_URL     = '`<link rel="canonical" href="([^"]+)"/>`';
+
 
     public function support($url)
     {
@@ -47,6 +50,12 @@ class RutubePlatform extends AbstractPlatform
         }
 
         return $this->returnData($video_data);
+    }
+
+    public function reverse($embed_code)
+    {
+        $url = $this->searchRegex(self::REVERSE_EMBED_URL, $embed_code);
+        return $this->searchRegex(self::REVERSE_VIDEO_URL, $this->getContent($url));
     }
 
     protected function findId($page)

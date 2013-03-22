@@ -2,6 +2,7 @@
 
 namespace Vex;
 
+use Vex\Exception\UrlNotFoundException;
 use Vex\Platform\PlatformInterface;
 use Vex\Result\Video;
 
@@ -31,6 +32,20 @@ class Vex
 
         $video_data = $this->getPlatform()->extract($url, array_merge($this->options, $options));
         return new Video($video_data);
+    }
+
+    public function reverse($embed_code)
+    {
+        if (empty($embed_code)) {
+            return null;
+        }
+
+        $url = $this->getPlatform()->reverse($embed_code);
+        if ($url === null) {
+            throw new UrlNotFoundException('Impossible to determine the url');
+        }
+
+        return $url;
     }
 
     public function setOption($key, $value)

@@ -86,6 +86,17 @@ class ChainedPlatform implements PlatformInterface
         throw new VideoNotFoundException('No platform could retrieve the video at: ' . $url);
     }
 
+    public function reverse($embed_code)
+    {
+        foreach ($this->platforms as $platform) {
+            if (($url = $platform->reverse($embed_code)) !== null) {
+                return $url;
+            }
+        }
+
+        return $url;
+    }
+
     public function getName()
     {
         return 'chained';
