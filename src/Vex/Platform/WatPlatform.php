@@ -13,6 +13,11 @@ class WatPlatform extends AbstractPlatform
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
     const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
 
+    const REVERSE_EMBED_URL     = '`src="([^"]+)"`';
+    const REVERSE_VIDEO_URL     = '`mediaurl : "([^"]+)"`';
+
+    const WAT_BASE_URL = 'http://www.wat.tv';
+
 
     public function support($url)
     {
@@ -47,6 +52,14 @@ class WatPlatform extends AbstractPlatform
         }
 
         return $this->returnData($video_data);
+    }
+
+    public function reverse($embed_code)
+    {
+        $url = $this->searchRegex(self::REVERSE_EMBED_URL, $embed_code);
+        $video_url = $this->searchRegex(self::REVERSE_VIDEO_URL, $this->getContent($url));
+
+        return empty($video_url) ? $video_url : self::WAT_BASE_URL . $video_url;
     }
 
     protected function findId($page)
