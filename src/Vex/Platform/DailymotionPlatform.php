@@ -10,6 +10,9 @@ class DailymotionPlatform extends AbstractPlatform
     const API_URL = 'https://api.dailymotion.com/video/%s?fields=title,embed_html,duration,thumbnail_url';
     const HTML_TMPL = '<iframe frameborder="0" width="%d" height="%d" src="http://www.dailymotion.com/embed/video/%s"></iframe>';
 
+    const REVERSE_EMBED_URL     = '`src="([^"]+)"`';
+    const REVERSE_VIDEO_URL     = '`<link rel="canonical" href="([^"]+)"`';
+
 
     public function support($url)
     {
@@ -46,6 +49,12 @@ class DailymotionPlatform extends AbstractPlatform
         }
 
         return $this->returnData($video_data);
+    }
+
+    public function reverse($embed_code)
+    {
+        $url = $this->searchRegex(self::REVERSE_EMBED_URL, $embed_code);
+        return $this->searchRegex(self::REVERSE_VIDEO_URL, $this->getContent($url));
     }
 
     protected function findId($url)

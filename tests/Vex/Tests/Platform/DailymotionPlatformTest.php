@@ -21,6 +21,15 @@ class DailymotionPlatformTest extends ApiPlatformTestCase
         $this->assertEquals('dailymotion', $platform->getName());
     }
 
+    /**
+     * @dataProvider reverseDataProvider
+     */
+    public function testReverse($html_code, $player_page, $expected_url)
+    {
+        $platform = new DailymotionPlatform($this->getMockAdapterReturns($player_page));
+        $this->assertSame($expected_url, $platform->reverse($html_code));
+    }
+
 
     public function supportUrlProvider()
     {
@@ -54,6 +63,43 @@ class DailymotionPlatformTest extends ApiPlatformTestCase
             // page url, api result
             array('http://www.dailymotion.com/video/', null),
             array('http://www.dailymotion.com/video/foo', 'invalid json'),
+        );
+    }
+
+    public function reverseDataProvider()
+    {
+        $player1 = '<iframe width="480" height="270" frameborder="0" src="http://www.dailymotion.com/embed/video/xl0wno"></iframe>';
+        $link1 = 'http://www.dailymotion.com/video/xl0wno_shakugan-no-shana-09-vostfr_shortfilms';
+        $page1 = <<<EOF
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shakugan No Shana 09 vostfr</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<style>
+body
+{
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    font-family: sans-serif;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Disable hugly Android highlight */
+}
+</style>
+<link rel="stylesheet" href="http://static1.dmcdn.net/css/gen/player.css.v40f2b7237a9839229">
+<link rel="canonical" href="http://www.dailymotion.com/video/xl0wno_shakugan-no-shana-09-vostfr_shortfilms">
+</head>
+<body>
+</body>
+</html>
+EOF;
+
+        return array(
+            array($player1, $page1, $link1),
         );
     }
 }
