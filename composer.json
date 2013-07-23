@@ -1,5 +1,6 @@
 {
     "name": "kphoen/vex",
+    "description": "Extract videos from any URL",
     "type": "library",
     "keywords": ["video", "url", "parser", "extractor", "rutube", "dailymotion"],
     "license": "MIT",
