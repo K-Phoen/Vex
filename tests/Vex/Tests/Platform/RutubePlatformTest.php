@@ -92,7 +92,8 @@ class RutubePlatformTest extends TestCase
             array($url, '<html><head><link rel="video_src" href="http://rutube.ru/video/embed/4242"/><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
             array($url, '<html><head><meta property="og:title" content="Foo" /><link rel="video_src" href="http://rutube.ru/video/embed/4242"/></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
             array($url, '<html><head><meta property="og:title" content="Foo" /><link rel="video_src" href="http://rutube.ru/video/embed/4242"/></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
-            array($url, '<html><head><link rel="video_src" href="http://rutube.ru/video/embed/4242"/><meta property="video:duration" content="120" /></head></html>', $player, null, 120, null, array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><link rel="video_src" href="http://rutube.ru/video/embed/4242"/><meta property="og:video:duration" content="120" /></head></html>', $player, null, 120, null, array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><link rel="video_src" href="http://rutube.ru/video/embed/4242"/><meta property="og:video:duration" content="120" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_duration' => false)),
         );
     }
 

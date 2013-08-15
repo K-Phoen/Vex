@@ -11,7 +11,7 @@ class RutubePlatform extends AbstractPlatform
     const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
     const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
     const HTML_TMPL = '<iframe width="%d" height="%d" src="http://rutube.ru/video/embed/%s" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>';
-    const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
+    const DURATION_REGEX = '`<meta property="og:video:duration" content="(\d+)" />`';
 
     const REVERSE_EMBED_URL     = '`src="([^"]+)"`';
     const REVERSE_VIDEO_URL     = '`<link rel="canonical" href="([^"]+)"/>`';
