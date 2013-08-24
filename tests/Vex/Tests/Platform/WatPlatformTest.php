@@ -73,22 +73,22 @@ class WatPlatformTest extends TestCase
 
     public function pageProvider()
     {
-        $url = 'http://www.wat.tv/video/bleach-514ap_2jud3_.html';
-        $player = '<iframe src="http://www.wat.tv/embedframe/292458nIc0K118450305" frameborder="0" style="width: 560px; height: 315px;"></iframe>';
-        $other_player = '<iframe src="http://www.wat.tv/embedframe/292458nIc0K118450305" frameborder="0" style="width: 520px; height: 280px;"></iframe>';
+        $url = 'http://www.wat.tv/video/black-rock-shooter-ep06-vostfr-54opt_2g4v7_.html';
+        $player = '<iframe src="https://www.wat.tv/embedframe/313147nIc0K118616737" frameborder="0" style="width: 560px; height: 315px;"></iframe>';
+        $other_player = '<iframe src="https://www.wat.tv/embedframe/313147nIc0K118616737" frameborder="0" style="width: 520px; height: 280px;"></iframe>';
 
         return array(
             // page url, page html, player, title, duration, thumb, options
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /></head></html>', $player, null, null, null, array()),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="og:image" content="http://cdn.wat.com/thumb.jpg" /></head></html>', $player, null, null, 'http://cdn.wat.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="og:image" content="http://cdn.wat.com/thumb.jpg" /></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="video:duration" content="120" /><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg" /></head></html>', $player, null, 120, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="video:duration" content="120" /><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg" /></head></html>', $player, null, null, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => false)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="video:duration" content="120" /><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg" /></head></html>', $player, null, 120, null, array('with_thumb' => false, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="video:duration" content="120" /></head></html>', $player, null, 120, null, array('with_thumb' => true, 'with_duration' => true)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="og:title" content="Foo" /></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="og:title" content="Foo" /></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
-            array($url, '<html><head><meta property="og:video" content="http://www.wat.tv/swf2/292458nIc0K118450305" /><meta property="og:title" content="Foo" /></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"></head></html>', $player, null, null, null, array()),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="og:image" content="http://cdn.wat.com/thumb.jpg"></head></html>', $player, null, null, 'http://cdn.wat.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="og:image" content="http://cdn.wat.com/thumb.jpg"></head></html>', $player, null, null, null, array('with_thumb' => false, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="video:duration" content="120"><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg"></head></html>', $player, null, 120, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="video:duration" content="120"><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg"></head></html>', $player, null, null, 'http://cdn.smotri.com/thumb.jpg', array('with_thumb' => true, 'with_duration' => false)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="video:duration" content="120"><meta property="og:image" content="http://cdn.smotri.com/thumb.jpg"></head></html>', $player, null, 120, null, array('with_thumb' => false, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="video:duration" content="120"></head></html>', $player, null, 120, null, array('with_thumb' => true, 'with_duration' => true)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="og:title" content="Foo"></head></html>', $player, null, null, null, array('with_thumb' => true, 'with_title' => false)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="og:title" content="Foo"></head></html>', $player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true)),
+            array($url, '<html><head><meta name="twitter:player" content="https://www.wat.tv/embedframe/313147nIc0K118616737"><meta property="og:title" content="Foo"></head></html>', $other_player, 'Foo', null, null, array('with_thumb' => true, 'with_title' => true, 'width' => 520, 'height' => 280)),
         );
     }
 

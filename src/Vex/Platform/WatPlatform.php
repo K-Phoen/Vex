@@ -7,11 +7,11 @@ use Vex\Exception\VideoNotFoundException;
 
 class WatPlatform extends AbstractPlatform
 {
-    const HTML_TMPL = '<iframe src="http://www.wat.tv/embedframe/%s" frameborder="0" style="width: %dpx; height: %dpx;"></iframe>';
-    const ID_REGEX = '`<meta property="og:video" content="http://www.wat.tv/swf2/(\w+)" />`';
-    const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)" />`';
-    const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)" />`';
-    const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)" />`';
+    const HTML_TMPL = '<iframe src="%s" frameborder="0" style="width: %dpx; height: %dpx;"></iframe>';
+    const PLAYER_URL_REGEX = '`<meta name="twitter:player" content="([^"]+)">`';
+    const TITLE_REGEX = '`<meta property="og:title" content="([^"]+)">`';
+    const THUMB_REGEX = '`<meta property="og:image" content="([^"]+)">`';
+    const DURATION_REGEX = '`<meta property="video:duration" content="(\d+)">`';
 
     const REVERSE_EMBED_URL     = '`src="([^"]+)"`';
     const REVERSE_VIDEO_URL     = '`mediaurl : "([^"]+)"`';
@@ -30,10 +30,10 @@ class WatPlatform extends AbstractPlatform
         $video_data = array('link' => $url);
 
         $content = $this->getContent($url);
-        $video_id = $this->findId($content);
+        $video_player_url = $this->findPlayerUrl($content);
 
         // get the html embed code
-        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_id, $options['width'], $options['height']);
+        $video_data['embed_code'] = sprintf(self::HTML_TMPL, $video_player_url, $options['width'], $options['height']);
 
         // retrieve the video's title
         if (array_key_exists('with_title', $options) && $options['with_title']) {
@@ -62,10 +62,10 @@ class WatPlatform extends AbstractPlatform
         return empty($video_url) ? $video_url : self::WAT_BASE_URL . $video_url;
     }
 
-    protected function findId($page)
+    protected function findPlayerUrl($page)
     {
-        if (!preg_match(self::ID_REGEX, $page, $matches)) {
-            throw new VideoNotFoundException('Impossible to retrieve the video\'s ID');
+        if (!preg_match(self::PLAYER_URL_REGEX, $page, $matches)) {
+            throw new VideoNotFoundException('Impossible to retrieve the video\'s player URL');
         }
 
         return $matches[1];
