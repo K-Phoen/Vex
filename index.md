@@ -1,7 +1,9 @@
 ---
 layout: layout
+author: Kévin Gomez
 title: Vex
 description: Parse any video URL
+project_url: https://github.com/K-Phoen/Vex
 ---
 
 Vex - Parse any video URL [![Build Status](https://travis-ci.org/K-Phoen/Vex.png?branch=master)](https://travis-ci.org/K-Phoen/Vex)

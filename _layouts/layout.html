@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width" />
   <title>{{ page.title }}</title>
 
-  <meta name="author" content="Kévin Gomez" />
+  <meta name="author" content="{{ page.author }}" />
 
   <link rel="stylesheet" href="css/base.css" type="text/css" media="screen, projection" />
   <link rel="stylesheet" href="css/pygments.css" type="text/css" />
@@ -20,25 +20,18 @@
             </div>
 
             <div class="ribbon">
-                <a href="https://github.com/K-Phoen/Vex">
+                <a href="{{ page.project_url }}">
                     <img style="position: absolute; top: 0; right: 0; border: 0;z-index: 400;" src="images/ribbon.png" alt="Fork me on GitHub" />
                 </a>
             </div>
         </header>
 
-        <div id="menu" class="twelve columns">
-            <ul>
-                <li><a href=".">Home</a></li>
-                <li><a href="http://www.kevingomez.fr/a-propos">About the author</a></li>
-            </ul>
-        </div>
-
         <div class="content">
-            {{ content }}
+            <div class="twelve columns">{{ content }}</div>
         </div>
 
         <div id="copyright" class="twelve columns">
-            <p>Le thème Jekyll est <a href="https://github.com/vjousse/wp-vjousse">disponible sur Github</a>.</p>
+            <p>Project maintained by <a href="http://github.com/K-Phoen/">Kévin Gomez</a>.</p>
         </div>
     </div>
 </body>
