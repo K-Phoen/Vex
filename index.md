@@ -1,6 +1,6 @@
 ---
 layout: layout
-theme_dir: /jekyll-theme/
+theme_dir: jekyll-theme
 
 author: Kévin Gomez
 title: Vex
