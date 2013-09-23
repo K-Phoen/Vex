@@ -104,7 +104,7 @@ phpunit
 Credits
 =======
 
-  * Kévin Gomez
+  * [Kévin Gomez](https://github.com/K-Phoen/)
   * [William Durand](https://github.com/willdurand/) - for the `HttpAdapter` part, which was borrowed from [Geocoder](https://github.com/willdurand/Geocoder)
   * [Jérôme Tamarelle](https://github.com/GromNaN/) - to whom I borrowed this README
 
