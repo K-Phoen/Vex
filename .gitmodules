@@ -1,0 +1,3 @@
+[submodule "jekyll-theme"]
+	path = jekyll-theme
+	url = https://github.com/K-Phoen/jekyll-theme.git

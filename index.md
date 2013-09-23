@@ -1,5 +1,7 @@
 ---
 layout: layout
+theme_dir: /jekyll-theme/
+
 author: Kévin Gomez
 title: Vex
 description: Parse any video URL
