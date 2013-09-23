@@ -39,7 +39,7 @@ Just create a `composer.json` file for your project:
 ```json
 {
     "require": {
-        "kphoen/vex": "dev-master"
+        "kphoen/vex": "1.1.*"
     }
 }
 ```
