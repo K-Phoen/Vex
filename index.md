@@ -36,43 +36,46 @@ The recommended way to install Vex is through composer.
 
 Just create a `composer.json` file for your project:
 
-{% highlight json %}
+```json
 {
     "require": {
         "kphoen/vex": "dev-master"
     }
 }
-{% endhighlight %}
+```
 
 And run these two commands to install it:
 
-{% highlight bash %}
+```bash
 $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
-{% endhighlight %}
+```
 
 
 Now you can add the autoloader, and you will have access to the library:
 
-{% highlight php %}
+```php
 <?php
+
 require 'vendor/autoload.php';
-{% endhighlight %}
+```
 
 If you don't use neither **Composer** nor a _ClassLoader_ in your application, just require the provided autoloader:
 
-{% highlight php %}
+```php
 <?php
+
 require_once 'src/autoload.php';
-{% endhighlight %}
+```
 
 You're done.
 
 Usage
 =====
 
-{% highlight php %}
+```php
 <?php
+
 use Vex\Vex;
 
 $http_adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
@@ -91,7 +94,12 @@ echo $video->getLink();
 echo $video->getDuration();
 // Show the video thumbnail
 echo $video->getThumb();
-{% endhighlight %}
+
+
+$url = $vex->reverse('<iframe width="640" height="360" src="http://rutube.ru/video/embed/6236741" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>');
+// shows http://rutube.ru/video/9f4dc6bc2db6b6051ea07fb20234c6cc/
+echo $url
+```
 
 Tests
 =====
@@ -99,22 +107,22 @@ Tests
 To run unit tests, you'll need cURL and a set of dependencies you can install
 using Composer:
 
-{% highlight bash %}
+```bash
 php composer.phar install --dev
-{% endhighlight %}
+```
 
 Once installed, just launch the following command:
 
-{% highlight bash %}
+```bash
 phpunit
-{% endhighlight %}
+```
 
 Credits
 =======
 
-* Kévin Gomez
-* [William Durand](https://github.com/willdurand/) - for the `HttpAdapter` part, which was borrowed from [Geocoder](https://github.com/willdurand/Geocoder)
-* [Jérôme Tamarelle](https://github.com/GromNaN/) - to whom I borrowed this README
+  * Kévin Gomez
+  * [William Durand](https://github.com/willdurand/) - for the `HttpAdapter` part, which was borrowed from [Geocoder](https://github.com/willdurand/Geocoder)
+  * [Jérôme Tamarelle](https://github.com/GromNaN/) - to whom I borrowed this README
 
 License
 =======
