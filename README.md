@@ -62,7 +62,7 @@ Usage
 ```php
 use Vex\Vex;
 
-$http_adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
+$adapter = new \Vex\HttpAdapter\BuzzHttpAdapter();
 $platform = \Vex\Platform\RutubePlatform($adapter);
 $vex = new Vex($platform);
 
