@@ -29,7 +29,7 @@ class DailymotionPlatform extends AbstractPlatform
         );
 
         $response = json_decode($this->getContent(sprintf(self::API_URL, $video_id)));
-        if (!$response) {
+        if (!$response || isset($response->error)) {
             throw new VideoNotFoundException('Impossible to query the API');
         }
 
