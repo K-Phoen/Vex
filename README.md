@@ -19,6 +19,13 @@ a supported URL and extract the video data.
 * [TagTele](http://www.tagtele.com/)
 * ... more to come
 
+Status
+======
+
+This project is **DEPRECATED** and should NOT be used. 
+
+If someone magically appears and wants to maintain this project, I'll gladly give access to this repository.
+
 Installation
 ============
 
